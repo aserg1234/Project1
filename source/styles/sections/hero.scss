@@ -1,0 +1,30 @@
+.hero{
+    min-height: 59px;
+    padding: 174px 0;
+    text-align: center;
+    color: #fff;
+    background: #ccc url('../images/hero-bg.jpg') center/cover no-repeat;
+
+    &__about{
+        font-family: $ff-main-bold;
+        font-size: 3rem;
+        line-height: 1;
+    }
+
+    &__title{
+        // обнуляю стандартн марджины
+        margin-top: 0;
+        margin-bottom: 27px;
+        font-family: $ff-main-light;
+    }
+    //делаем правку стилей кнопки(не рекомендуется так влаживать
+    //но в данном случае пойдет
+    .button--text-uppercase{
+        padding: 21px 41 px;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+}
