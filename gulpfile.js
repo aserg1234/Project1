@@ -8,6 +8,14 @@ const rename = require('gulp-rename');
 
 sass.compiler = require('node-sass');
 
+//модули js
+// убирает лишние пробелы и делает код в одну строку
+const uglify = require('gulp-uglify');
+// объединить все файлы js в один
+const concat = require('gulp-concat');
+// связать минифицированный/объединённый файл с файлами, из которых он получился
+const sourcemaps = require('gulp-sourcemaps');
+
 //код из сайта browser-sync
 //изменяю настройки добавляю port:3501
 // меняю baseDir: "./"
@@ -46,6 +54,20 @@ gulp.task('styles:compile', function () {
       .pipe(gulp.dest('build/css'));
   });
 
+  //добавляю js задачи
+gulp.task('js', function(){
+    return gulp.src([
+            'source/js/form.js',
+            'source/js/navigation.js',            
+            'source/js/main.js'
+        ])
+        .pipe(sourcemaps.init())
+        .pipe(concat('main.min.js'))
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('build/js'));
+
+});
 
 // создаю gulp sprites 
 gulp.task('sprite', function (cb) {
@@ -85,8 +107,10 @@ gulp.task('copy', gulp.parallel('copy:fonts', 'copy:images'));
 //добавляем вотчеры для sass и pug
 gulp.task('watch', function(){
     gulp.watch('source/templates/**/*.pug', gulp.series('templates:compile'));
-    gulp.watch('source/styles/**/*.scss', gulp.series('styles:compile'));    
+    gulp.watch('source/styles/**/*.scss', gulp.series('styles:compile'));  
+    gulp.watch('source/js/**/*.js', gulp.series('js'));  
 });
+
 
 //default делаю команду в командн строке gulp compile
 //выполнится все что находится в этом блоке
